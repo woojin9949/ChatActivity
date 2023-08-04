@@ -12,7 +12,7 @@
         android:theme="@style/Theme.ChatActivity"
         tools:targetApi="31">
         <activity
-            android:name=".ChatDetailActivity"
+            android:name=".chatlist.chatdetail.ChatDetailActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

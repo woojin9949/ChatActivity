@@ -1,5 +1,6 @@
 package fastcampus.projects.chatactivity.chatlist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fastcampus.projects.chatactivity.Key.Companion.DB_CHATROOMS
 import fastcampus.projects.chatactivity.R
+import fastcampus.projects.chatactivity.chatlist.chatdetail.ChatDetailActivity
 import fastcampus.projects.chatactivity.databinding.FragmentChatlistBinding
 import fastcampus.projects.chatactivity.databinding.FragmentUserlistBinding
 
@@ -22,13 +24,21 @@ class ChatListFragment : Fragment(R.layout.fragment_chatlist) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentChatlistBinding.bind(view)
-        val chatListAdapter = ChatListAdapter()
+        val chatListAdapter = ChatListAdapter {
+            val intent = Intent(context, ChatDetailActivity::class.java)
+            intent.putExtra("otherUserId", it.otherUserId)
+            intent.putExtra("chatRoomId", it.chatRoomId)
+            startActivity(intent)
+        }
+
+
         binding.chatListRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = chatListAdapter
         }
         val currentUserId = Firebase.auth.currentUser?.uid ?: return
         val chatRoomsDB = Firebase.database.reference.child(DB_CHATROOMS).child(currentUserId)
+
         chatRoomsDB.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val chatRoomList = snapshot.children.map {

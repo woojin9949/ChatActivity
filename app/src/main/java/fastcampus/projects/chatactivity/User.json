@@ -11,8 +11,9 @@
       "status(상태메시지)": "bbbb"
     }
   },
+
   "ChatRooms": {
-    "해당유저의 uid": {
+    "해당(나)유저의 uid": {
       "상대방 유저 uid": {
         "ChatRoomId": "String",
         "lastMessage": "String",
@@ -33,6 +34,7 @@
       }
     }
   },
+
   "Chat": {
     "ChatRoomId": {
       "메시지 ID": {
