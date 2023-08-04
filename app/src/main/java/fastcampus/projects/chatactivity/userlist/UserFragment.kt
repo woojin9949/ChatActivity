@@ -25,14 +25,18 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         binding = FragmentUserlistBinding.bind(view)
+        //유저 클릭시 채팅방으로 이동하게 정보 받아오기 및 설정
         val userListAdapter = UserAdapter { otherUser ->
+            //기본값 가져오기
             val myUserId = Firebase.auth.currentUser?.uid ?: ""
             val chatRoomDB =
                 Firebase.database.reference.child(DB_CHATROOMS).child(myUserId)
                     .child(otherUser.userId ?: "")
+            
             chatRoomDB.get().addOnSuccessListener {
+                //챗룸 있는지 없는지 파악 후, 챗룸 생성 및 챗룸 아이디와 상대방 아이디 intent 설정
                 var chatRoomId = ""
                 if (it.value != null) {
                     //데이터가 존재 (메시지)
@@ -64,7 +68,8 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
         }
 
         val currentId = Firebase.auth.currentUser?.uid
-
+        
+        //리스트를 한번만 불러오면 되기 때문에 singleValueEvent 사용
         Firebase.database.reference.child(DB_USERS)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {

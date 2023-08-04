@@ -25,6 +25,7 @@ class ChatListFragment : Fragment(R.layout.fragment_chatlist) {
 
         binding = FragmentChatlistBinding.bind(view)
         val chatListAdapter = ChatListAdapter {
+            //클릭한 유저의 아이디와 챗룸 아이디를 넣음
             val intent = Intent(context, ChatDetailActivity::class.java)
             intent.putExtra("otherUserId", it.otherUserId)
             intent.putExtra("chatRoomId", it.chatRoomId)
@@ -36,9 +37,11 @@ class ChatListFragment : Fragment(R.layout.fragment_chatlist) {
             layoutManager = LinearLayoutManager(context)
             adapter = chatListAdapter
         }
+        //파이어베이스의 uid를 가져와서 챗룸에 대한 정보를 받아 올 수 있게 설정
         val currentUserId = Firebase.auth.currentUser?.uid ?: return
         val chatRoomsDB = Firebase.database.reference.child(DB_CHATROOMS).child(currentUserId)
-
+        
+        //챗룸에서 받아온 정보를 ChatRoomItem 형식으로 변환
         chatRoomsDB.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val chatRoomList = snapshot.children.map {

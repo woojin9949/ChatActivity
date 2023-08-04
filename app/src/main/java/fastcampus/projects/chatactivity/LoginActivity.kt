@@ -36,13 +36,14 @@ class LoginActivity : AppCompatActivity() {
                         //회원가입 성공
                         Toast.makeText(this, "회원가입 성공하였습니다. 로그인을 해주십시오", Toast.LENGTH_SHORT).show()
                         val user = auth.currentUser
-                        Log.d("testt", "" + user?.email)
                     } else {
                         //회원가입 실패
                         Toast.makeText(this, "회원가입 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        return@addOnCompleteListener
                     }
                 }
         }
+
         binding.signinButton.setOnClickListener {
             //로그인
             val email = binding.emailEditText.text.toString()
@@ -57,13 +58,17 @@ class LoginActivity : AppCompatActivity() {
                     val currentUser = Firebase.auth.currentUser
                     if (task.isSuccessful && currentUser != null) {
                         val userId = currentUser.uid
+
+                        //데이터 입력 시에 map 형태로 대입을 위해 생성
                         val user = mutableMapOf<String, Any>()
                         user["userId"] = userId
                         user["username"] = email
 
-                        Firebase.database.reference.child(DB_USERS).child(userId).updateChildren(user)
+                        Firebase.database.reference.child(DB_USERS).child(userId)
+                            .updateChildren(user)
 
                         Toast.makeText(this, "로그인 성공하였습니다.", Toast.LENGTH_SHORT).show()
+                        //로그인 성공하면 MainActivity로 이동
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     } else {
