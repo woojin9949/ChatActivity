@@ -7,7 +7,9 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import fastcampus.projects.chatactivity.Key.Companion.DB_USERS
 import fastcampus.projects.chatactivity.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -52,7 +54,15 @@ class LoginActivity : AppCompatActivity() {
             auth = Firebase.auth
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
+                    val currentUser = Firebase.auth.currentUser
+                    if (task.isSuccessful && currentUser != null) {
+                        val userId = currentUser.uid
+                        val user = mutableMapOf<String, Any>()
+                        user["userId"] = userId
+                        user["username"] = email
+
+                        Firebase.database.reference.child(DB_USERS).child(userId).updateChildren(user)
+
                         Toast.makeText(this, "로그인 성공하였습니다.", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()

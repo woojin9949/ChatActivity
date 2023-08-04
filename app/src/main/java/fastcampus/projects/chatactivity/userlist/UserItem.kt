@@ -1,7 +1,7 @@
 package fastcampus.projects.chatactivity.userlist
 
 data class UserItem(
-    val userId: String,
-    val username: String,
-    val status: String,
-    )
+    val userId: String? = null,
+    val username: String? = null,
+    val status: String? = null,
+)

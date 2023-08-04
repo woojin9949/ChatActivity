@@ -1,0 +1,65 @@
+{
+  "Users": {
+    "Firebase 유저 uid1": {
+      "userId": "Firebase 유저 uid1",
+      "username": "김꽁",
+      "status(상태메시지)": "aaaa"
+    },
+    "Firebase 유저 uid2": {
+      "userId": "Firebase 유저 uid2",
+      "username": "김우진",
+      "status(상태메시지)": "bbbb"
+    }
+  },
+  "ChatRooms": {
+    "해당유저의 uid": {
+      "상대방 유저 uid": {
+        "ChatRoomId": "String",
+        "lastMessage": "String",
+        "otherUserId": "해당유저의 uid",
+        "otherUserName": "cccc    //상대방 유저 uid를 통해 Users단에서 검색을 통해 username을 구할 수 있음"
+      },
+      "상대방 유저 uid": {
+        "ChatRoomId": "String",
+        "lastMessage": "String",
+        "otherUserId": "해당유저의 uid",
+        "otherUserName": "cccc    //상대방 유저 uid를 통해 Users단에서 검색을 통해 username을 구할 수 있음"
+      },
+      "상대방 유저 uid": {
+        "ChatRoomId": "String",
+        "lastMessage": "String",
+        "otherUserId": "해당유저의 uid",
+        "otherUserName": "cccc    //상대방 유저 uid를 통해 Users단에서 검색을 통해 username을 구할 수 있음"
+      }
+    }
+  },
+  "Chat": {
+    "ChatRoomId": {
+      "메시지 ID": {
+        "chatId": "String",
+        "message": "String",
+        "userId": "String"
+      },
+      "메시지 ID": {
+        "chatId": "String",
+        "message": "String",
+        "userId": "String"
+      },
+      "메시지 ID": {
+        "chatId": "String",
+        "message": "String",
+        "userId": "String"
+      },
+      "메시지 ID": {
+        "chatId": "String",
+        "message": "String",
+        "userId": "String"
+      },
+      "메시지 ID": {
+        "chatId": "String",
+        "message": "String",
+        "userId": "String"
+      }
+    }
+  }
+}
