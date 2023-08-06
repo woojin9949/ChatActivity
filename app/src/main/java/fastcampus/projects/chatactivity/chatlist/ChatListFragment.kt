@@ -38,8 +38,8 @@ class ChatListFragment : Fragment(R.layout.fragment_chatlist) {
             adapter = chatListAdapter
         }
         //파이어베이스의 uid를 가져와서 챗룸에 대한 정보를 받아 올 수 있게 설정
-        val currentUserId = Firebase.auth.currentUser?.uid ?: return
-        val chatRoomsDB = Firebase.database.reference.child(DB_CHATROOMS).child(currentUserId)
+        val myUserId = Firebase.auth.currentUser?.uid ?: return
+        val chatRoomsDB = Firebase.database.reference.child(DB_CHATROOMS).child(myUserId)
         
         //챗룸에서 받아온 정보를 ChatRoomItem 형식으로 변환
         chatRoomsDB.addValueEventListener(object : ValueEventListener {

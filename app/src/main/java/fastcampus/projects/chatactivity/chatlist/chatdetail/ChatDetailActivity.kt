@@ -23,6 +23,7 @@ class ChatDetailActivity : AppCompatActivity() {
     private var otherUserId: String = ""
     private var myUserId: String = ""
     private var myUserName: String = ""
+
     private val chatItemList = mutableListOf<ChatDetailItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +58,9 @@ class ChatDetailActivity : AppCompatActivity() {
                     chatDetailItem ?: return
 
                     chatItemList.add(chatDetailItem)
-
-                    chatDetailAdapter.submitList(chatItemList)
+                    
+                    //리스트를 업데이트를 해야하기 때문에 사용
+                    chatDetailAdapter.submitList(chatItemList.toMutableList())
                 }
 
                 override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}

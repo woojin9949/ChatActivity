@@ -31,11 +31,11 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
         val userListAdapter = UserAdapter { otherUser ->
             //기본값 가져오기
             val myUserId = Firebase.auth.currentUser?.uid ?: ""
-            val chatRoomDB =
+            val chatRoomsDB =
                 Firebase.database.reference.child(DB_CHATROOMS).child(myUserId)
                     .child(otherUser.userId ?: "")
-            
-            chatRoomDB.get().addOnSuccessListener {
+
+            chatRoomsDB.get().addOnSuccessListener {
                 //챗룸 있는지 없는지 파악 후, 챗룸 생성 및 챗룸 아이디와 상대방 아이디 intent 설정
                 var chatRoomId = ""
                 if (it.value != null) {
@@ -50,7 +50,7 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
                         otherUserName = otherUser.username,
                         otherUserId = otherUser.userId
                     )
-                    chatRoomDB.setValue(newChatRoom)
+                    chatRoomsDB.setValue(newChatRoom)
                 }
                 val intent = Intent(context, ChatDetailActivity::class.java)
 
