@@ -39,13 +39,16 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.userList -> {
                     replaceFragment(userFragment)
+                    supportActionBar?.title = "친구 목록"
                     return@setOnItemSelectedListener true
                 }
                 R.id.chatroomList -> {
+                    supportActionBar?.title = "채팅방 목록"
                     replaceFragment(chatListFragment)
                     return@setOnItemSelectedListener true
                 }
                 R.id.myPage -> {
+                    supportActionBar?.title = "마이 페이지"
                     replaceFragment(myPageFragment)
                     return@setOnItemSelectedListener true
                 }
