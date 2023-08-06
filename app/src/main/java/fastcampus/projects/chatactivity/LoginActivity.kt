@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import fastcampus.projects.chatactivity.Key.Companion.DB_USERS
 import fastcampus.projects.chatactivity.databinding.ActivityLoginBinding
 
@@ -59,18 +60,21 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful && currentUser != null) {
                         val userId = currentUser.uid
 
-                        //데이터 입력 시에 map 형태로 대입을 위해 생성
-                        val user = mutableMapOf<String, Any>()
-                        user["userId"] = userId
-                        user["username"] = email
+                        Firebase.messaging.token.addOnCompleteListener {
+                            val token = it.result
+                            val user = mutableMapOf<String, Any>()
+                            user["userId"] = userId
+                            user["username"] = email
+                            user["fcmToken"] = token
 
-                        Firebase.database.reference.child(DB_USERS).child(userId)
-                            .updateChildren(user)
-
-                        Toast.makeText(this, "로그인 성공하였습니다.", Toast.LENGTH_SHORT).show()
-                        //로그인 성공하면 MainActivity로 이동
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
+                            Firebase.database.reference.child(DB_USERS).child(userId)
+                                .updateChildren(user)
+                            
+                            Toast.makeText(this, "로그인 성공하였습니다.", Toast.LENGTH_SHORT).show()
+                            //로그인 성공하면 MainActivity로 이동
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
+                        }
                     } else {
                         Log.e("LoginActivity", task.exception.toString())
                     }

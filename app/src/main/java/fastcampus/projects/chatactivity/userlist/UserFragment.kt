@@ -62,6 +62,7 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
             }
             //"ChatRooms/myUserId/otherUserId"
         }
+
         binding.userRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = userListAdapter

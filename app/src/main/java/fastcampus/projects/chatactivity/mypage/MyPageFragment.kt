@@ -21,10 +21,10 @@ class MyPageFragment : Fragment(R.layout.fragment_mypage) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMypageBinding.bind(view)
 
-        val currentUserId = Firebase.auth.currentUser?.uid ?: ""
-        val currentUserDB = Firebase.database.reference.child(DB_USERS).child(currentUserId)
+        val myUserId = Firebase.auth.currentUser?.uid ?: ""
+        val myUserDB = Firebase.database.reference.child(DB_USERS).child(myUserId)
 
-        currentUserDB.get().addOnSuccessListener {
+        myUserDB.get().addOnSuccessListener {
             val currentUserItem = it.getValue(UserItem::class.java) ?: return@addOnSuccessListener
             binding.usernameEditText.setText(currentUserItem.username)
             binding.statusEditText.setText(currentUserItem.status)
@@ -40,7 +40,7 @@ class MyPageFragment : Fragment(R.layout.fragment_mypage) {
             val user = mutableMapOf<String, Any>()
             user["username"] = username
             user["status"] = status
-            currentUserDB.updateChildren(user)
+            myUserDB.updateChildren(user)
         }
         binding.logoutButton.setOnClickListener {
             Firebase.auth.signOut()
